@@ -27,6 +27,15 @@ public class MyDBConnection {
 	public PreparedStatement semesterlistele;
 	public PreparedStatement sectionlistele;
 	
+	public PreparedStatement studentsilme;
+	public PreparedStatement coursesilme;
+	public PreparedStatement gradesilme;
+	public PreparedStatement yearsilme;
+	public PreparedStatement semestersilme;
+	public PreparedStatement sectionsilme;
+	
+	
+	
 	
 	public PreparedStatement listele;
 	public static MyDBConnection instance = null;
@@ -40,10 +49,6 @@ public class MyDBConnection {
 	// inside the method. 
 	
 	
-	
-	
-	
-	
 	synchronized public static MyDBConnection getInstance() {
 		if(instance == null) {
 			instance = new MyDBConnection(); 
@@ -51,12 +56,6 @@ public class MyDBConnection {
 		}
 		return instance;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -92,17 +91,22 @@ public class MyDBConnection {
 				sectionekle = connection.prepareStatement("insert into section(sectionId,sectionHour) values(?,?)");
 			
 				studentlistele = connection.prepareStatement("select * from student");
-				courselistele = connection.prepareStatement("select * from student");
-				gradelistele = connection.prepareStatement("select * from student");
-				yearlistele = connection.prepareStatement("select * from student");
-				semesterlistele = connection.prepareStatement("select * from student");
-				sectionlistele = connection.prepareStatement("select * from student");
+				courselistele = connection.prepareStatement("select * from course");
+				gradelistele = connection.prepareStatement("select * from grade");
+				yearlistele = connection.prepareStatement("select * from year");
+				semesterlistele = connection.prepareStatement("select * from semester");
+				sectionlistele = connection.prepareStatement("select * from section");
+			
+				studentsilme = connection.prepareStatement("DELETE FROM student WHERE studentName = ?");
+				coursesilme = connection.prepareStatement("DELETE FROM course WHERE courseName = ?");
+				gradesilme = connection.prepareStatement("DELETE FROM grade WHERE gradeType = ?");
+				yearsilme = connection.prepareStatement("DELETE FROM year WHERE yearId = ?");
+				semestersilme = connection.prepareStatement("DELETE FROM semester WHERE semesterName = ?");
+				sectionsilme = connection.prepareStatement("DELETE FROM section WHERE sectionId = ?");
 				
+			
 				
-				
-				ekle = connection.prepareStatement("insert into mytable(name) values(?)");
-				listele = connection.prepareStatement("select * from mytable");
-				
+			
 				
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Connection to sql failed");
@@ -111,17 +115,62 @@ public class MyDBConnection {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	public void insertText(String t) {
+	public void insertStudent(String n,int i){
 		try {
-			ekle.setString(1, t);
-			ekle.execute();
+			studentekle.setString(1, n);
+			studentekle.setInt(1, i);
+			studentekle.execute();
 		} catch(SQLException e) {}
+		
+	}
+
+	public void insertYear(int i){
+		try {
+			yearekle.setInt(1, i);
+			yearekle.execute();
+		} catch(SQLException e) {}
+		
+	}
+	
+	public void insertCourse(int n,int k){
+		try {
+			courseekle.setLong(0, k);
+			courseekle.setInt(1, n);
+			courseekle.execute();
+		} catch(SQLException e) {}
+		
+	}
+	
+	public void insertGrade(String gradeTypee,int gradeNot) {
+	try {
+		gradeekle.setString(1, gradeTypee);
+		gradeekle.setInt(1, gradeNot);
+		gradeekle.execute();
+	} catch(SQLException e) {}
+		
+	}
+	
+	public void insertSemester(String i){
+		try {
+			
+			semesterekle.setString(0, i);
+			semesterekle.execute();
+		} catch(SQLException e) {}
+	}
+ 
+	public void insertSection(int i,int j){
+		try {
+		
+
+			sectionekle.setInt(1, i);
+			sectionekle.setInt(1, j);
+			sectionekle.execute();
+		} catch(SQLException e) {}
+	}
+
+	public void loopText() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
@@ -130,6 +179,7 @@ public class MyDBConnection {
 	
 	
 	
+	/*
 	public void loopText() {
 		try {
 			ResultSet rs = listele.executeQuery();
@@ -140,13 +190,12 @@ public class MyDBConnection {
 		} catch(SQLException e) {}
 	}
 	
+	*/
 	
 	
 	
 	
-	
-	
-	
+	/*
 	public ArrayList<String> getList() {
 		ArrayList<String> l = new ArrayList<>();
 		try {
@@ -157,4 +206,6 @@ public class MyDBConnection {
 		} catch(SQLException e) {}
 		return l;
 	}
+*/
+	
 }
